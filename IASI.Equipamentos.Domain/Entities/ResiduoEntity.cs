@@ -1,20 +1,32 @@
-﻿using IASI.Equipamentos.Domain.Entities.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IASI.Equipamentos.Domain.Common;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IASI.Equipamentos.Domain.Entities
 {
-    public class ResiduoEntity : CommonEntity
+    [Table("tb_iasi_equipamentos_residuo")]
+    public class Residuo : CommonEntity
     {
-        public int IdEquipamento { get; set; }
-        public string TipoResiduo { get; set; }
-        public float QuantidadeResiduo { get; set; }
-        public DateTime DataGeracaoResiduo { get; set; }
-        public string DestinoFinalResiduo { get; set; }
+        [Key]
+        [Column("id_residuo")]
+        public override int Id { get; set; }
 
+        [Column("id_equipamento")]
+        public int IdEquipamento { get; set; }
+
+        [Column("tipo_residuo")]
+        public string TipoResiduo { get; set; } = string.Empty;
+
+        [Column("quantidade_residuo")]
+        public float? QuantidadeResiduo { get; set; }
+
+        [Column("data_geracao_residuo")]
+        public DateTime? DataGeracaoResiduo { get; set; }
+
+        [Column("destino_final_residuo")]
+        public string DestinoFinalResiduo { get; set; } = string.Empty;
+
+        [ForeignKey("IdEquipamento")]
         public Equipamento? Equipamento { get; set; }
     }
 }

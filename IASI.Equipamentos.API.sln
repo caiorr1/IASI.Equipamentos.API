@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34902.65
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IASI.Equipamentos.API", "IASI.Equipamentos.API\IASI.Equipamentos.API.csproj", "{A7A1CDDB-5009-4833-BDDC-413F55E060B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IASI.Equipamentos.API", "IASI.Equipamentos.API\IASI.Equipamentos.API.csproj", "{A7A1CDDB-5009-4833-BDDC-413F55E060B3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0 - Presentation", "0 - Presentation", "{D4F11AFE-415F-4037-8DB5-CB6DC796988F}"
 EndProject
@@ -19,13 +19,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{B506B0CA-7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Ioc", "Ioc", "{D3BACA12-DAAD-4391-9FB1-22B10D5BA37D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IASI.Equipamentos.Application", "IASI.Equipamentos.Application\IASI.Equipamentos.Application.csproj", "{8464DCB3-C4FE-436F-9AA6-CFDD5807F1F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IASI.Equipamentos.Application", "IASI.Equipamentos.Application\IASI.Equipamentos.Application.csproj", "{8464DCB3-C4FE-436F-9AA6-CFDD5807F1F3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IASI.Equipamentos.Infrastructure.Ioc", "IASI.Equipamentos.Infrastructure.Ioc\IASI.Equipamentos.Infrastructure.Ioc.csproj", "{338EA257-7B5F-4F04-A21A-372C1BC16417}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IASI.Equipamentos.Infrastructure.Ioc", "IASI.Equipamentos.Infrastructure.Ioc\IASI.Equipamentos.Infrastructure.Ioc.csproj", "{338EA257-7B5F-4F04-A21A-372C1BC16417}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IASI.Equipamentos.Infrastructure.Data", "IASI.Equipamentos.Infrastructure.Data\IASI.Equipamentos.Infrastructure.Data.csproj", "{10679D85-2E68-43F8-846F-72C091BBD9A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IASI.Equipamentos.Infrastructure.Data", "IASI.Equipamentos.Infrastructure.Data\IASI.Equipamentos.Infrastructure.Data.csproj", "{10679D85-2E68-43F8-846F-72C091BBD9A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IASI.Equipamentos.Domain", "IASI.Equipamentos.Domain\IASI.Equipamentos.Domain.csproj", "{78E0E7FA-5CB5-4051-BD25-0677EF981BD5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IASI.Equipamentos.Domain", "IASI.Equipamentos.Domain\IASI.Equipamentos.Domain.csproj", "{78E0E7FA-5CB5-4051-BD25-0677EF981BD5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

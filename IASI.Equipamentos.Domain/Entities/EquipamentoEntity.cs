@@ -1,19 +1,30 @@
-﻿using IASI.Equipamentos.Domain.Entities.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using IASI.Equipamentos.Domain.Common;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace IASI.Equipamentos.Domain.Entities
 {
-    public class EquipamentoEntity : CommonEntity
+    [Table("tb_iasi_equipamentos_equipamento")]
+    public class Equipamento : CommonEntity
     {
-        public string NomeEquipamento { get; set; }
-        public string TipoEquipamento { get; set; }
-        public string LocalizacaoEquipamento { get; set; }
-        public DateTime DataInstalacaoEquipamento { get; set; }
-        public string EstadoEquipamento { get; set; }
+        [Key]
+        [Column("id_equipamento")]
+        public override int Id { get; set; }
+
+        [Column("nome_equipamento")]
+        public string NomeEquipamento { get; set; } = string.Empty;
+
+        [Column("tipo_equipamento")]
+        public string TipoEquipamento { get; set; } = string.Empty;
+
+        [Column("localizacao_equipamento")]
+        public string LocalizacaoEquipamento { get; set; } = string.Empty;
+
+        [Column("data_instalacao_equipamento")]
+        public DateTime? DataInstalacaoEquipamento { get; set; }
+
+        [Column("estado_equipamento")]
+        public string EstadoEquipamento { get; set; } = string.Empty;
 
         public ICollection<Previsao>? Previsoes { get; set; }
         public ICollection<Consumo>? Consumos { get; set; }

@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="AppContext\" />
-    <Folder Include="Repositories\" />
-    <Folder Include="Resolver\" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Oracle.EntityFrameworkCore" Version="8.23.50" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\IASI.Equipamentos.Application\IASI.Equipamentos.Application.csproj" />
+    <ProjectReference Include="..\IASI.Equipamentos.Domain\IASI.Equipamentos.Domain.csproj" />
   </ItemGroup>
 
 </Project>
