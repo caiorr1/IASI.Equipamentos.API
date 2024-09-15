@@ -3,6 +3,14 @@
 
 Este projeto é uma API de gerenciamento de equipamentos desenvolvida para o sistema IASI (Inteligência Artificial para Sustentabilidade Industrial). A API permite criar, ler, atualizar e deletar informações sobre equipamentos, consumos, manutenções, previsões e resíduos, integrando-os a um banco de dados Oracle.
 
+## Integrantes do Grupo
+
+Caio Ribeiro Rodrigues - RM: 99759
+Guilherme Riofrio Quaglio - RM: 550137
+Elen Cabral - RM: 98790
+Mary Speranzini - RM: 550242
+Eduardo Jablinski - RM: 550975 
+
 ## Sumário
 
 - [Requisitos](#requisitos)
