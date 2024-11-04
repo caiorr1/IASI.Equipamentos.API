@@ -21,6 +21,20 @@ A API utiliza a **Onion Architecture**, que promove a separação entre as camad
 - **Service Pattern**: Para encapsular a lógica de negócio.
 - **Dependency Injection**: Para inversão de controle, facilitando testes e manutenção.
 
+## Princípios de SOLID e Clean Code
+
+### Clean Code
+O projeto adota os princípios de Clean Code, garantindo um código legível, organizado e fácil de manter. As convenções incluem nomes significativos, organização lógica dos métodos e classes, além de comentários mínimos e eficientes que facilitam a compreensão e colaboração entre desenvolvedores.
+
+### SOLID
+Os princípios SOLID são aplicados para melhorar a arquitetura e a flexibilidade do código:
+
+1. **Single Responsibility Principle (SRP)**: Cada classe tem uma única responsabilidade, como `EquipamentoService` e `CarbonService`, que são focados exclusivamente em suas respectivas tarefas.
+2. **Open/Closed Principle (OCP)**: As classes estão abertas para extensão, mas fechadas para modificações. Por exemplo, novas funcionalidades podem ser adicionadas sem alterar classes existentes.
+3. **Liskov Substitution Principle (LSP)**: Substituições de classes base por classes derivadas mantêm a funcionalidade do sistema, garantindo que `IEquipamentoRepository` pode ser usado sem depender de implementações específicas.
+4. **Interface Segregation Principle (ISP)**: Interfaces específicas são criadas para diferentes responsabilidades, evitando interfaces abrangentes e excessivamente complexas.
+5. **Dependency Inversion Principle (DIP)**: A API utiliza injeção de dependências para gerenciar interações entre classes, mantendo as dependências flexíveis e permitindo a fácil substituição de implementações.
+
 ## Requisitos
 
 - [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
