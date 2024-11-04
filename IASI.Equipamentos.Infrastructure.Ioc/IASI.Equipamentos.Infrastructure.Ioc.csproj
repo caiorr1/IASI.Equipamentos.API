@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="8.0.1" />
+    <PackageReference Include="Microsoft.OpenApi" Version="1.6.22" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\IASI.Equipamentos.Application\IASI.Equipamentos.Application.csproj" />
     <ProjectReference Include="..\IASI.Equipamentos.Domain\IASI.Equipamentos.Domain.csproj" />
     <ProjectReference Include="..\IASI.Equipamentos.Infrastructure.Data\IASI.Equipamentos.Infrastructure.Data.csproj" />

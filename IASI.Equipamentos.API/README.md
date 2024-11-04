@@ -1,7 +1,7 @@
 
-# IASI Empresas API
+# IASI Equipamentos API
 
-Este projeto é uma API de gerenciamento de empresas e relatórios desenvolvida para o sistema IASI (Inteligência Artificial para Sustentabilidade Industrial). A API permite criar, ler, atualizar e deletar informações sobre empresas, contatos, documentos, relatórios, tipos de relatórios, setores e usuários, integrando-os a um banco de dados Oracle.
+Este projeto é uma API de gerenciamento de equipamentos e previsões de manutenção, parte do sistema IASI (Inteligência Artificial para Sustentabilidade Industrial). Além de gerenciar dados de equipamentos, a API possui integração com uma API externa de emissões de carbono e funcionalidades de previsão de manutenção utilizando ML.NET.
 
 ## Integrantes do Grupo
 
@@ -13,145 +13,112 @@ Este projeto é uma API de gerenciamento de empresas e relatórios desenvolvida 
 
 ## Arquitetura
 
-A API utiliza a **Onion Architecture**, que promove uma separação clara entre as diferentes camadas da aplicação: Domain, Application, Infrastructure e Presentation. Essa arquitetura facilita a manutenção e evolução do software, bem como a injeção de dependências e o teste de unidades.
+A API utiliza a **Onion Architecture**, que promove a separação entre as camadas Domain, Application, Infrastructure e Presentation. Essa arquitetura facilita a injeção de dependências, a manutenibilidade e o teste unitário.
 
-### Design Patterns Utilizados
+### Padrões de Projeto Utilizados
 
-- **Repository Pattern**: Para abstrair o acesso aos dados, facilitando a manutenção e testes.
-- **Service Pattern**: Para encapsular a lógica de negócio e permitir reutilização de código.
-- **Dependency Injection**: Para promover a inversão de controle e facilitar o teste e a manutenção.
+- **Repository Pattern**: Para abstrair o acesso aos dados.
+- **Service Pattern**: Para encapsular a lógica de negócio.
+- **Dependency Injection**: Para inversão de controle, facilitando testes e manutenção.
 
 ## Requisitos
 
 - [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [ML.NET](https://dotnet.microsoft.com/apps/machinelearning-ai/ml-dotnet) para previsão de manutenção
 - [Oracle Database](https://www.oracle.com/database/)
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) ou [Visual Studio Code](https://code.visualstudio.com/)
-- [Oracle Data Provider for .NET (ODP.NET)](https://www.oracle.com/database/technologies/dotnet-odacdeploy-downloads.html)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/)
+- Pacotes NuGet: `Microsoft.Extensions.DependencyInjection`, `ML.NET`, `Newtonsoft.Json`, `Swashbuckle.AspNetCore`
 
 ## Instalação
 
-1. Clone o repositório para sua máquina local:
+1. Clone o repositório:
    ```bash
-   git clone https://github.com/seuusuario/IASI.Empresas.API.git
-   cd IASI.Empresas.API
+   git clone https://github.com/seuusuario/IASI.Equipamentos.API.git
+   cd IASI.Equipamentos.API
    ```
 
-2. Abra o projeto no **Visual Studio** ou **Visual Studio Code**.
-
-3. Restaure os pacotes NuGet:
+2. Restaure os pacotes NuGet:
    ```bash
    dotnet restore
    ```
 
-## Configuração
+3. Configure a string de conexão com o Oracle em **appsettings.json**.
 
-1. No arquivo **`appsettings.json`**, configure a string de conexão com o banco de dados Oracle:
-   ```json
-   {
-     "ConnectionStrings": {
-       "DefaultConnection": "User Id=seu_usuario;Password=sua_senha;Data Source=(DESCRIPTION=(ADDRESS_LIST=(ADDRESS=(PROTOCOL=TCP)(HOST=oracle.fiap.com.br)(PORT=1521)))(CONNECT_DATA=(SERVICE_NAME=ORCL)))"
-     },
-     "Logging": {
-       "LogLevel": {
-         "Default": "Information",
-         "Microsoft.AspNetCore": "Warning"
-       }
-     },
-     "AllowedHosts": "*"
-   }
-   ```
-   Substitua `seu_usuario` e `sua_senha` pelas credenciais do seu banco de dados.
+## Estrutura de Pastas
 
-## Migrações do Banco de Dados
+- **Controllers**: Contém os controladores da API.
+- **Data**: Armazena o arquivo CSV para treinar o modelo de manutenção.
+- **Services**: Implementa a lógica de negócio e previsão.
 
-1. Abra o **Package Manager Console** no Visual Studio (**Tools > NuGet Package Manager > Package Manager Console**).
+## Endpoints
 
-2. Crie as migrações:
-   ```powershell
-   Add-Migration InitialMigration
-   ```
+### **Equipamento**
 
-3. Aplique as migrações ao banco de dados:
-   ```powershell
-   Update-Database
-   ```
+- **GET /api/equipamento**: Retorna todos os equipamentos.
+- **GET /api/equipamento/{id}**: Retorna um equipamento específico por ID.
+- **POST /api/equipamento**: Cria um novo equipamento.
+- **PUT /api/equipamento/{id}**: Atualiza os dados de um equipamento.
+- **DELETE /api/equipamento/{id}**: Remove um equipamento.
 
-## Executando a API
+### **Manutenção**
 
-1. Compile e execute o projeto:
-   - No **Visual Studio**, pressione **F5**.
-   - No **Visual Studio Code**, use o comando:
-   ```bash
-   dotnet run --project IASI.Empresas.API
-   ```
+- **GET /api/manutencao**: Retorna todos os registros de manutenção.
+- **POST /api/manutencao**: Adiciona um novo registro de manutenção.
 
-2. A API estará disponível em `https://localhost:{porta}`, onde `{porta}` é o número da porta configurado.
+### **Recomendação (ML.NET)**
 
-## Uso da API
+- **POST /api/recomendacao/treinar-modelo**: Treina o modelo de previsão de manutenção com o CSV.
+- **POST /api/recomendacao/prever-manutencao**: Realiza uma previsão de manutenção com base nos dados fornecidos.
 
-### Endpoints Disponíveis
+  **Exemplo de JSON para previsão**:
+  ```json
+  {
+    "equipmentAge": 5,
+    "lastMaintenance": 2,
+    "equipmentType": "Pump",
+    "maintenanceNeeded": false
+  }
+  ```
 
-#### **Empresas**
-- **`GET /api/empresa`**: Lista todas as empresas.
-- **`GET /api/empresa/{id}`**: Obtém uma empresa por ID.
-- **`POST /api/empresa`**: Cria uma nova empresa.
-- **`PUT /api/empresa/{id}`**: Atualiza uma empresa existente.
-- **`DELETE /api/empresa/{id}`**: Remove uma empresa.
+### **API Externa de Emissões de Carbono**
 
-#### **Contatos**
-- **`GET /api/contato`**: Lista todos os contatos.
-- **`GET /api/contato/{id}`**: Obtém um contato por ID.
-- **`POST /api/contato`**: Cria um novo contato.
-- **`PUT /api/contato/{id}`**: Atualiza um contato existente.
-- **`DELETE /api/contato/{id}`**: Remove um contato.
+- **POST /api/carbon/calculate-electricity-emissions**: Calcula as emissões de carbono de acordo com o consumo elétrico.
 
-#### **Documentos**
-- **`GET /api/documento`**: Lista todos os documentos.
-- **`GET /api/documento/{id}`**: Obtém um documento por ID.
-- **`POST /api/documento`**: Cria um novo documento.
-- **`PUT /api/documento/{id}`**: Atualiza um documento existente.
-- **`DELETE /api/documento/{id}`**: Remove um documento.
+  **Exemplo de JSON**:
+  ```json
+  {
+    "electricityUnit": "kWh",
+    "electricityValue": 500,
+    "country": "us",
+    "state": "ny"
+  }
+  ```
 
-#### **Relatórios**
-- **`GET /api/relatorio`**: Lista todos os relatórios.
-- **`GET /api/relatorio/{id}`**: Obtém um relatório por ID.
-- **`POST /api/relatorio`**: Cria um novo relatório.
-- **`PUT /api/relatorio/{id}`**: Atualiza um relatório existente.
-- **`DELETE /api/relatorio/{id}`**: Remove um relatório.
+## Testes
 
-#### **Outros Endpoints:**
-- **Tipos de Relatório**: `/api/relatoriotipo`
-- **Setores**: `/api/setor`
-- **Usuários**: `/api/usuario`
+O projeto inclui testes unitários para os principais serviços e controladores, cobrindo cenários como:
 
-### Exemplo de Requisição para Criar uma Empresa
-```json
-POST /api/empresa
-{
-  "nomeEmpresa": "Empresa XYZ",
-  "setorIndustrialEmpresa": "Tecnologia",
-  "localizacaoEmpresa": "São Paulo, SP",
-  "tipoEmpresa": "Privada",
-  "conformidadeRegulamentar": "S"
-}
+- **CarbonServiceTests**: Testa a integração com a API externa de emissões de carbono.
+- **EquipamentoControllerTests**: Valida as operações CRUD para equipamentos.
+- **RecomendacaoControllerTests**: Testa a funcionalidade de previsão e treinamento com ML.NET.
+
+Para rodar os testes, utilize o seguinte comando:
+```bash
+dotnet test
 ```
 
-## Documentação da API
+## Documentação Swagger
 
-A documentação da API está disponível via Swagger em:
-
-```
-https://localhost:{porta}/swagger
-```
+A documentação detalhada da API está disponível em `/swagger`.
 
 ## Contribuição
 
-1. Faça um Fork do projeto.
-2. Crie uma branch para a sua feature (`git checkout -b feature/NovaFeature`).
-3. Faça o Commit das suas alterações (`git commit -m 'Adiciona nova feature'`).
-4. Faça um Push para a branch (`git push origin feature/NovaFeature`).
+1. Faça um Fork.
+2. Crie uma branch (`git checkout -b feature/NovaFeature`).
+3. Commit suas alterações (`git commit -m 'Adiciona nova feature'`).
+4. Push para a branch (`git push origin feature/NovaFeature`).
 5. Abra um Pull Request.
 
 ## Licença
 
-Este projeto está licenciado sob os termos da licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
+Licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais informações.

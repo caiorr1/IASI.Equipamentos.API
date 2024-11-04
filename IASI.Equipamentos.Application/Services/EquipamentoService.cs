@@ -1,73 +1,85 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using IASI.Equipamentos.Domain.Dtos;
 using IASI.Equipamentos.Domain.Entities;
 using IASI.Equipamentos.Domain.Interfaces;
 
 namespace IASI.Equipamentos.Application.Services
 {
-    /// <summary>
-    /// Serviço para gerenciamento de equipamentos.
-    /// </summary>
-    public class EquipamentoService
+    public class EquipamentoService : IEquipamentoService
     {
         private readonly IEquipamentoRepository _equipamentoRepository;
 
-        /// <summary>
-        /// Inicializa uma nova instância de <see cref="EquipamentoService"/>.
-        /// </summary>
-        /// <param name="equipamentoRepository">O repositório de equipamentos.</param>
         public EquipamentoService(IEquipamentoRepository equipamentoRepository)
         {
             _equipamentoRepository = equipamentoRepository;
         }
 
-        /// <summary>
-        /// Obtém todos os equipamentos.
-        /// </summary>
-        /// <returns>Uma lista de todos os equipamentos.</returns>
-        public async Task<IEnumerable<Equipamento>> ObterTodosAsync()
+        public async Task<IEnumerable<EquipamentoDTO>> ObterTodosAsync()
         {
-            return await _equipamentoRepository.GetAllAsync();
+            var equipamentos = await _equipamentoRepository.GetAllAsync();
+            return equipamentos.Select(e => new EquipamentoDTO
+            {
+                Id = e.Id,
+                Nome = e.NomeEquipamento,
+                Tipo = e.TipoEquipamento,
+                Localizacao = e.LocalizacaoEquipamento,
+                DataInstalacao = e.DataInstalacaoEquipamento,
+                Estado = e.EstadoEquipamento
+            });
         }
 
-        /// <summary>
-        /// Obtém um equipamento por ID.
-        /// </summary>
-        /// <param name="id">O ID do equipamento.</param>
-        /// <returns>O equipamento correspondente ao ID fornecido.</returns>
-        public async Task<Equipamento> ObterPorIdAsync(int id)
+        public async Task<EquipamentoDTO> ObterPorIdAsync(int id)
         {
-            return await _equipamentoRepository.GetByIdAsync(id);
+            var equipamento = await _equipamentoRepository.GetByIdAsync(id);
+            if (equipamento == null) return null;
+
+            return new EquipamentoDTO
+            {
+                Id = equipamento.Id,
+                Nome = equipamento.NomeEquipamento,
+                Tipo = equipamento.TipoEquipamento,
+                Localizacao = equipamento.LocalizacaoEquipamento,
+                DataInstalacao = equipamento.DataInstalacaoEquipamento,
+                Estado = equipamento.EstadoEquipamento
+            };
         }
 
-        /// <summary>
-        /// Adiciona um novo equipamento.
-        /// </summary>
-        /// <param name="equipamento">O equipamento a ser adicionado.</param>
-        /// <returns>Uma tarefa representando a operação assíncrona.</returns>
-        public async Task AdicionarAsync(Equipamento equipamento)
+        public async Task<bool> AdicionarAsync(EquipamentoDTO equipamentoDto)
         {
+            var equipamento = new Equipamento
+            {
+                NomeEquipamento = equipamentoDto.Nome,
+                TipoEquipamento = equipamentoDto.Tipo,
+                LocalizacaoEquipamento = equipamentoDto.Localizacao,
+                DataInstalacaoEquipamento = equipamentoDto.DataInstalacao,
+                EstadoEquipamento = equipamentoDto.Estado
+            };
+
             await _equipamentoRepository.AddAsync(equipamento);
+            return true;
         }
 
-        /// <summary>
-        /// Atualiza um equipamento existente.
-        /// </summary>
-        /// <param name="equipamento">O equipamento a ser atualizado.</param>
-        /// <returns>Uma tarefa representando a operação assíncrona.</returns>
-        public async Task AtualizarAsync(Equipamento equipamento)
+        public async Task<bool> AtualizarAsync(int id, EquipamentoDTO equipamentoDto)
         {
+            var equipamento = await _equipamentoRepository.GetByIdAsync(id);
+            if (equipamento == null) return false;
+
+            equipamento.NomeEquipamento = equipamentoDto.Nome;
+            equipamento.TipoEquipamento = equipamentoDto.Tipo;
+            equipamento.LocalizacaoEquipamento = equipamentoDto.Localizacao;
+            equipamento.DataInstalacaoEquipamento = equipamentoDto.DataInstalacao;
+            equipamento.EstadoEquipamento = equipamentoDto.Estado;
+
             await _equipamentoRepository.UpdateAsync(equipamento);
+            return true;
         }
 
-        /// <summary>
-        /// Remove um equipamento pelo ID.
-        /// </summary>
-        /// <param name="id">O ID do equipamento a ser removido.</param>
-        /// <returns>Uma tarefa representando a operação assíncrona.</returns>
-        public async Task RemoverAsync(int id)
+        public async Task<bool> RemoverAsync(int id)
         {
             await _equipamentoRepository.DeleteAsync(id);
+            return true;
         }
     }
 }
